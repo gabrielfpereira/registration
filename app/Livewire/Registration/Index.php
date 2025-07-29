@@ -111,7 +111,7 @@ class Index extends Component
     {
         $this->registration = Registration::with('items')->findOrFail($id);
 
-        $fileName = $this->registration->student_name . '-' . $this->registration->class_number . '-'. now()->format('dmY') . '.pdf';
+        $fileName = $this->registration->student_name . '-' . $this->registration->class_number . '-' . now()->format('dmY') . '.pdf';
 
         // Gera o PDF
         FacadesPdf::view('pdfs.registration', [

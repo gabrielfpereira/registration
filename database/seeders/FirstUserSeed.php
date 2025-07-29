@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FirstUserSeed extends Seeder
@@ -15,10 +14,10 @@ class FirstUserSeed extends Seeder
         // Here you can create the first user or any initial data you need.
         // For example:
         \App\Models\User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@soamar.com',
+            'name'     => 'Admin User',
+            'email'    => 'admin@soamar.com',
             'password' => bcrypt('Password@123'),
-            'type' => 'supervisor'
+            'type'     => 'supervisor',
         ]);
     }
 }

@@ -104,7 +104,7 @@ class SuspensionCreate extends Component
             'end_date'           => 'required|date|after_or_equal:start_date',
             'signature_selected' => 'required|exists:signatures,id',
         ]);
-        
+
         $registration = Registration::create([
             'student_name'            => $this->student_name,
             'class_number'            => (int) $this->class_number,
@@ -116,7 +116,7 @@ class SuspensionCreate extends Component
             'user_id'                 => auth()->id(),
         ]);
         $registration->items()->sync($this->items_selected);
-        
+
         if ($this->signature_selected) {
             $registration->signatures()->attach($this->signature_selected);
         }
