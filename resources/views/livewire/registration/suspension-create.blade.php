@@ -7,7 +7,6 @@
 
    <x-form wire:submit="save">
         <x-input label="Nome do Aluno(a)" placeholder="Nome do Guerreiro" wire:model="student_name" />
-        <x-input label="Turma" placeholder="Ex.: 2202" wire:model="class_number" x-mask="9999" hint="somente os numeros."/>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <x-select
@@ -19,12 +18,14 @@
                 ]"
                 />
 
-            <x-choices 
-                label="Itens de Registro" 
-                wire:model="items_selected" 
-                :options="$this->items" 
-                allow-all />
+            <x-input label="Turma" placeholder="Ex.: 2202" wire:model="class_number" x-mask="9999" hint="somente os numeros."/>
+
         </div>
+        <x-choices 
+            label="Itens de Registro" 
+            wire:model="items_selected" 
+            :options="$this->items" 
+            allow-all />
 
         <x-textarea label="Observações" wire:model="observation" placeholder="Observações adicionais" rows="3" hint="campo opcional." />
         

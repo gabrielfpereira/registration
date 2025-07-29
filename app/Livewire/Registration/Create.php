@@ -21,7 +21,7 @@ class Create extends Component
 
     public $class_number = '';
 
-    public string $status = 'pending';
+    public string $status = 'Pendente';
 
     public string $observation = '';
 

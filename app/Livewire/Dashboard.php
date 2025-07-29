@@ -2,9 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Registration;
-use App\Models\User;
-use Illuminate\Support\Collection;
+use App\Models\{Registration, User};
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Mary\Traits\Toast;
@@ -43,7 +41,7 @@ class Dashboard extends Component
         ];
     }
 
-   #[Computed()]
+    #[Computed()]
     public function usersCount()
     {
         return User::count();

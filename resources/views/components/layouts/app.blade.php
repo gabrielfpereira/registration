@@ -67,6 +67,9 @@
                 <x-menu-sub title="Registros" icon="o-document">
                     <x-menu-item title="Itens de Registros" icon="o-rectangle-stack" link="/registration/items" />
                     <x-menu-item title="Arquivos de Registros" icon="o-archive-box" link="/registration" />
+                    @can('supervisor')
+                        <x-menu-item title="Assinaturas" icon="o-pencil" link="/registration/signature" />
+                    @endcan
                 </x-menu-sub>
             </x-menu>
         </x-slot:sidebar>

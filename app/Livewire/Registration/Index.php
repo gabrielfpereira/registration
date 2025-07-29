@@ -97,9 +97,8 @@ class Index extends Component
 
     public function showRegister(int $id)
     {
-        $this->registration         = Registration::with(['items', 'signatures', 'user'])->findOrFail($id);
-        $this->registration->status = $this->registration->status == 'pending' ? 'Pendente' : 'Concluído';
-        $this->registration->type   = match($this->registration->type) {
+        $this->registration       = Registration::with(['items', 'signatures', 'user'])->findOrFail($id);
+        $this->registration->type = match($this->registration->type) {
             'infracao'  => 'Infração',
             'medida'    => 'Medida',
             'suspensao' => 'Suspensão',
@@ -133,7 +132,7 @@ class Index extends Component
         Gate::authorize('checkStatus', Registration::findOrFail($id));
 
         $registration         = Registration::findOrFail($id);
-        $registration->status = $registration->status == 'pending' ? 'done' : 'pending';
+        $registration->status = $registration->status == 'Pendente' ? 'Concluído' : 'Pendente';
         $registration->save();
 
         $this->toast('success', 'Status atualizado com sucesso!');
