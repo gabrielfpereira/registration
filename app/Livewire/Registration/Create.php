@@ -65,7 +65,7 @@ class Create extends Component
             'class_number'   => 'required|string|max:4',
             'items_selected' => 'required|array|exists:items,id',
             'status'         => 'in:pending,approved,rejected',
-            'observations'   => 'nullable|string|max:500',
+            'observation'   => 'nullable|string|max:500',
         ]);
 
         Registration::create([
