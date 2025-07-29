@@ -2,7 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Registration;
+use App\Models\User;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -40,30 +43,20 @@ class Dashboard extends Component
         ];
     }
 
-    /**
-     * For demo purpose, this is a static collection.
-     *
-     * On real projects you do it with Eloquent collections.
-     * Please, refer to maryUI docs to see the eloquent examples.
-     */
-    public function users(): Collection
+   #[Computed()]
+    public function usersCount()
     {
-        return collect([
-            ['id' => 1, 'name' => 'Mary', 'email' => 'mary@mary-ui.com', 'age' => 23],
-            ['id' => 2, 'name' => 'Giovanna', 'email' => 'giovanna@mary-ui.com', 'age' => 7],
-            ['id' => 3, 'name' => 'Marina', 'email' => 'marina@mary-ui.com', 'age' => 5],
-        ])
-            ->sortBy([[...array_values($this->sortBy)]])
-            ->when($this->search, function (Collection $collection) {
-                return $collection->filter(fn (array $item) => str($item['name'])->contains($this->search, true));
-            });
+        return User::count();
+    }
+
+    #[Computed()]
+    public function todayRecordsCount()
+    {
+        return Registration::whereDate('created_at', today())->count();
     }
 
     public function render()
     {
-        return view('livewire.Dashboard', [
-            'users'   => $this->users(),
-            'headers' => $this->headers(),
-        ]);
+        return view('livewire.Dashboard');
     }
 }

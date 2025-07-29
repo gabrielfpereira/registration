@@ -58,8 +58,8 @@
                     <x-menu-separator />
                 @endif
 
-                <x-menu-item title="Início" icon="o-sparkles" link="/" />
-                
+                <x-menu-item title="Início" icon="o-sparkles" link="/dashboard" />
+
                 @if(Gate::allows('supervisor'))
                     <x-menu-item title="Pessoal" icon="o-users" link="/people" /> 
                 @endif
