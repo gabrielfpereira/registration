@@ -41,6 +41,7 @@ class Register extends Component
             'name'     => $this->name,
             'email'    => $this->email,
             'password' => $this->password,
+            'type'     => 'supervisor',
         ]);
 
         Auth::login($user);
