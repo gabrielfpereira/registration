@@ -3,7 +3,7 @@
 use App\Livewire\Auth\Register;
 use Illuminate\Support\Facades\{Auth, Route};
 
-Route::get('/register', Register::class)->name('register');
+//Route::get('/register', Register::class)->name('register');
 Route::get('/logout', function () {
     Auth::logout();
 
