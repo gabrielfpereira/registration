@@ -51,7 +51,7 @@ class Index extends Component
             ['key' => 'status', 'label' => 'Status', 'sortable' => false, 'class' => 'w-20'],
             ['key' => 'type', 'label' => 'Tipo', 'class' => 'w-20'],
             ['key' => 'class_number', 'label' => 'Turma', 'class' => 'w-20'],
-            ['key' => 'user', 'label' => 'Autor', 'class' => 'w-20'],
+            ['key' => 'user', 'label' => 'Autor'],
         ];
     }
 
@@ -111,7 +111,7 @@ class Index extends Component
     {
         $this->registration = Registration::with('items')->findOrFail($id);
 
-        $fileName = $this->registration->student_name . now()->timestamp . '.pdf';
+        $fileName = $this->registration->student_name . '-' . $this->registration->class_number . '-'. now()->format('dmY') . '.pdf';
 
         // Gera o PDF
         FacadesPdf::view('pdfs.registration', [

@@ -17,8 +17,8 @@ return new class () extends Migration {
             $table->integer('class_number');
             $table->string('type')->default('infringement');// infringement, measure, suspension
             $table->string('status')->default('pending'); // pending, approved, rejected
-            $table->date('registration_date_start')->nullable();
-            $table->date('registration_date_end')->nullable();
+            $table->dateTime('registration_date_start')->nullable();
+            $table->dateTime('registration_date_end')->nullable();
             $table->string('director_name')->nullable();
             $table->string('observation')->nullable();
             $table->timestamps();

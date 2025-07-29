@@ -12,5 +12,17 @@
             icon="o-rectangle-stack"
             color="text-primary" />
 
+        <x-stat
+            title="Registros Suspensos Hoje"
+            value="{{ $this->studentsSuspendedToday->count() }}"
+            icon="o-exclamation-triangle"
+            color="text-warning" />
+
     </div>
+
+    @if ($this->studentsSuspendedToday->count() > 0)
+        <x-card title="Alunos em Suspensão" class="mt-6" shadow>
+           <x-table :headers="$this->headers" :rows="$this->studentsSuspendedToday" striped />
+        </x-card>
+    @endif
 </div>

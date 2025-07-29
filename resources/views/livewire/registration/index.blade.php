@@ -96,7 +96,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <x-input label="Tipo" value="{{ $registration->type }}" readonly />
-            <x-input label="Data de Criação" value="{{ $registration->created_at }}" readonly />
+            <x-input label="Data de Criação" value="{{ $registration->created_at->format('d/m/Y') }}" readonly />
         </div>
         <x-input label="Autor" value="{{ $registration->user->name }}" readonly />
 
@@ -109,8 +109,8 @@
 
         @if ($registration->type == 'Suspensão')
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <x-input label="Data de Início da Suspensão" value="{{ $registration->registration_date_start }}" readonly />
-                <x-input label="Data de Fim da Suspensão" value="{{ $registration->registration_date_end }}" readonly />
+                <x-input label="Data de Início da Suspensão" value="{{ \Carbon\Carbon::parse($registration->registration_date_start)->format('d/m/Y') }}" readonly />
+                <x-input label="Data de Fim da Suspensão" value="{{ \Carbon\Carbon::parse($registration->registration_date_end)->format('d/m/Y') }}" readonly />
             </div>
             @if ($registration->signatures->isNotEmpty())
                 <div class="border-1 border-gray-300 p-4 mb-4 mt-4">

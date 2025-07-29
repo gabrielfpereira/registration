@@ -4,6 +4,8 @@
 
 
     </x-header>
+        <x-errors title="Oops!" description="Please, fix them." icon="o-face-frown" />
+
 
    <x-form wire:submit="save">
         <x-input label="Nome do Aluno(a)" placeholder="Nome do Guerreiro" wire:model="student_name" />

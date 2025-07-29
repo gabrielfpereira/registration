@@ -30,17 +30,6 @@ class Dashboard extends Component
         $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
     }
 
-    // Table headers
-    public function headers(): array
-    {
-        return [
-            ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
-            ['key' => 'name', 'label' => 'Name', 'class' => 'w-64'],
-            ['key' => 'age', 'label' => 'Age', 'class' => 'w-20'],
-            ['key' => 'email', 'label' => 'E-mail', 'sortable' => false],
-        ];
-    }
-
     #[Computed()]
     public function usersCount()
     {
@@ -51,6 +40,28 @@ class Dashboard extends Component
     public function todayRecordsCount()
     {
         return Registration::whereDate('created_at', today())->count();
+    }
+
+    #[Computed()]
+    public function studentsSuspendedToday()
+    {
+        return Registration::query()
+            ->whereDate('registration_date_start', '<', today())
+            ->whereDate('registration_date_end', '>', today())
+            ->where('type', 'suspensao')
+            ->get();
+    }
+
+    #[Computed()]
+    public function headers()
+    {
+        return [
+            ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
+            ['key' => 'student_name', 'label' => 'Nome do Aluno(a)', 'class' => 'w-64'],
+            ['key' => 'status', 'label' => 'Status', 'class' => 'w-20'],
+            ['key' => 'registration_date_start', 'label' => 'Data de Início', 'class' => 'w-32', 'format' => ['date', 'd/m/Y']],
+            ['key' => 'registration_date_end', 'label' => 'Data de Término', 'class' => 'w-32', 'format' => ['date', 'd/m/Y']],
+        ];
     }
 
     public function render()

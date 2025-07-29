@@ -34,15 +34,25 @@
         } }}</h1>
 
         <p>Sr. Pai/Responsável,</p>
-        <p>Informamos a vossa senhoria que o(a) aluno(a) supracitado, obteve no dia <strong>{{ $registration->created_at }}</strong> o seguinte registro de ocorrência
+        <p>Informamos a vossa senhoria que o(a) aluno(a) supracitado, obteve no dia <strong>{{ $registration->created_at->format('d/m/Y') }}</strong> o seguinte registro de ocorrência
         descumpindo ao Regimento Escolar da ETI Almirante Tamandaré.</p>
 
         <div class="border-1 border-gray-300 p-4 mb-4 mt-4">
             <p><strong>Nome do Aluno(a):</strong> {{ $registration->student_name }}</p>
-            <p><strong>Turma:</strong> {{ $registration->class_number }}</p>
-            <p><strong>Tipo de Registro:</strong> {{ $registration->type }}</p>
-            <p><strong>Status:</strong> {{ $registration->status }}</p>
-            <p><strong>Data da Ocorrência:</strong> {{ $registration->created_at }}</p>
+            <div class="flex justify-between items-center">
+                <p><strong>Turma:</strong> {{ $registration->class_number }}</p>
+                <p><strong>Tipo de Registro:</strong> {{ match ($registration->type) {
+            'medida' => 'Medida Disciplinar',
+            'infracao' => 'Infração Disciplinar',
+            'suspensao' => 'Suspensão',
+        } }}</p>
+                <p><strong>Status:</strong> {{ $registration->status }}</p>
+            </div>
+            <p><strong>Data da Ocorrência:</strong> {{ $registration->created_at->format('d/m/Y') }}</p>
+            @if ($registration->type == 'suspensao')
+                <p><strong>Dias de Suspensão:</strong> {{ \Carbon\Carbon::parse($registration->registration_date_start)->format('d/m/Y') }} até {{ \Carbon\Carbon::parse($registration->registration_date_end)->format('d/m/Y') }}</p>
+                <p>O aluno(a) deverá retornar às aulas no dia {{ \Carbon\Carbon::parse($registration->registration_date_end)->addDay()->format('d/m/Y') }}.</p>
+            @endif
             <p><strong>Itens de Registro:</strong></p>
             <ul class="list-disc pl-5">
                 @foreach($registration->items as $item)
@@ -52,46 +62,39 @@
         </div>
 
         @if ($registration->observation)
-            <div class="border-1 border-gray-300 p-4 mb-4 mt-4">
+            <div class="border-1 border-gray-300 p-4 mb-2 mt-4">
             <p><strong>Observações:</strong></p>
             <p>{{ $registration->observation }}</p>
         </div>
         @endif
 
-        <div class="border-1 border-gray-300 p-4 mb-4 mt-4">
+        <div class="border-1 border-gray-300 p-4 mb-4 mt-2">
             <p><strong>Campo para resposta:</strong></p>
-            <p>_________________________________________________________________________________</p>
-            <p>_________________________________________________________________________________</p>
-            <p>_________________________________________________________________________________</p>
+            <p>_____________________________________________________________________________________
+                ____________________________________________________________________________________
+                ____________________________________________________________________________________
+            </p>
         </div>
 
-        <div class="flex justify-center items-start mt-8">
+        <div class="{{ $registration->type == 'suspensao' ? 'grid grid-cols-3 gap-4' : 'flex justify-between' }} mt-8">
             @foreach ($registration->signatures as $signature)
                 <div class="text-center mr-4">
-                    <p>_________________________________</p>
+                    <p>___________________________</p>
                     <p>{{ $signature->name }}</p>
                     <p>{{ $signature->role }}</p>
                 </div>
             @endforeach
-            
-        </div>
-
-        <div class="flex justify-between items-start mt-8">
-            <div class="text-center">
-                <p>_________________________________</p>
+             <div class="text-center">
+                <p>___________________________</p>
                 <p>{{ $registration->user->name }}</p>
                 <p>{{ $registration->user->type == 'instructor' ? 'Instrutor Disciplinar' : 'Supervisor' }}</p>
             </div>
 
             <div class="text-center">
-                <p>__________________________________</p>
+                <p>___________________________</p>
                 <p>Responsável</p>
             </div>
-           
         </div>
-
-
-
     </div>
   
 </body>
