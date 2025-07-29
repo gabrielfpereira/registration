@@ -14,6 +14,8 @@ Route::get('/registration', \App\Livewire\Registration\Index::class)->middleware
 Route::get('/registration/suspension-create', \App\Livewire\Registration\SuspensionCreate::class)->middleware(['auth'])->name('registration.suspension-create');
 
 Route::get('/registration/signature', \App\Livewire\Registration\Signature::class)->middleware(['auth'])->name('registration.signature');
+Route::get('/profile', \App\Livewire\Profile\Index::class)->middleware(['auth'])->name('profile.index');
+
 Route::get('/print/{id}', function ($id) {
     return view('pdfs.registration', [
         'registration' => \App\Models\Registration::with(['items', 'user'])->findOrFail($id),

@@ -71,6 +71,9 @@
                         <x-menu-item title="Assinaturas" icon="o-pencil" link="/registration/signature" />
                     @endcan
                 </x-menu-sub>
+
+                <x-menu-item title="Perfil" icon="o-user-circle" link="/profile" />
+
             </x-menu>
         </x-slot:sidebar>
 
