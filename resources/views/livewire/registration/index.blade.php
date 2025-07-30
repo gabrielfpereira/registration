@@ -53,17 +53,21 @@
             @endscope
 
             @scope('actions', $registration)
-                <div class="flex items-center gap-1">
-                    <x-button icon="o-printer" wire:click="print({{ $registration['id'] }})" spinner class="btn-ghost btn-sm text-secondary" />
-                    {{-- <x-button icon="o-download" wire:click="download({{ $registration['id'] }})" spinner class="btn-ghost btn-sm text-primary" /> --}}
-                    <x-button icon="o-eye" wire:click="showRegister({{ $registration['id'] }})" spinner class="btn-ghost btn-sm text-primary" />
-                    <x-button icon="o-trash" wire:click="delete({{ $registration['id'] }})" spinner class="btn-ghost btn-sm text-error" />
-                    @if ($registration['status'] == 'Pendente')
-                        <x-button icon="o-check-circle" wire:click="toggleStatus({{ $registration['id'] }})" spinner class="btn-ghost btn-sm text-success" />
-                    @else
-                        <x-button icon="o-x-circle" wire:click="toggleStatus({{ $registration['id'] }})" spinner class="btn-ghost btn-sm text-warning" />
-                    @endif
-                </div>
+            <x-dropdown>
+                 <x-slot:trigger>
+                    <x-button icon="o-ellipsis-vertical" class="btn-circle" />
+                </x-slot:trigger>
+                <x-menu-item title="Imprimir" icon="o-printer"  wire:click.stop="print({{ $registration['id'] }})" spinner="print" />
+                <x-menu-item title="Ver" icon="o-eye" wire:click.stop="showRegister({{ $registration['id'] }})" spinner="showRegister" class="btn-ghost btn-sm text-info" />
+                <x-menu-item title="Deletar" icon="o-trash" wire:click.stop="delete({{ $registration['id'] }})" spinner="delete" class="btn-ghost btn-sm text-error" />
+
+                @if ($registration['status'] == 'Pendente')
+                    <x-menu-item title="Safo" icon="o-check-circle" wire:click.stop="toggleStatus({{ $registration['id'] }})" spinner class="btn-ghost btn-sm text-success" />
+                @else
+                    <x-menu-item title="Não Safo" icon="o-x-circle" wire:click.stop="toggleStatus({{ $registration['id'] }})" spinner class="btn-ghost btn-sm text-warning" />
+                @endif
+            </x-dropdown>
+               
             @endscope
 
         </x-table>
