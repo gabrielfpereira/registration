@@ -53,7 +53,7 @@
             @endscope
 
             @scope('actions', $registration)
-            <x-dropdown>
+            <x-dropdown no-x-anchor right>
                  <x-slot:trigger>
                     <x-button icon="o-ellipsis-vertical" class="btn-circle" />
                 </x-slot:trigger>
