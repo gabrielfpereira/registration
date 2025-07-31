@@ -23,6 +23,8 @@ class Items extends Component
 
     public ?int $item_id = null;
 
+    public bool $trash = false;
+
     public function render()
     {
         return view('livewire.registration.items');
@@ -44,6 +46,9 @@ class Items extends Component
         return Item::query()
             ->when($this->search, function ($query) {
                 $query->where('description', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->trash, function ($query) {
+                $query->onlyTrashed();
             })
             ->select(['id', 'description', 'points'])
             ->orderBy('description')
@@ -74,8 +79,26 @@ class Items extends Component
     public function confirmDelete()
     {
         Item::destroy($this->item_id);
-        $this->toast('success', 'Item excluído com sucesso!');
+        $this->toast('success', 'Item movido para a lixeira!');
         $this->modal_delete = false;
         $this->item_id      = null;
+    }
+
+    public function restore(int $id)
+    {
+        Item::withTrashed()->findOrFail($id)->restore();
+        $this->toast('success', 'Item restaurado com sucesso!');
+    }
+
+    public function forceDelete(int $id)
+    {
+        Item::withTrashed()->findOrFail($id)->forceDelete();
+        $this->toast('success', 'Item excluído permanentemente com sucesso!');
+    }
+
+    #[Computed()]
+    public function trashedCount()
+    {
+        return Item::onlyTrashed()->count();
     }
 }

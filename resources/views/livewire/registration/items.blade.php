@@ -1,19 +1,25 @@
 <div>
     <!-- HEADER -->
-    <x-header title="Itens de Registro" separator progress-indicator>
+    <x-header title="{{ $this->trash ? 'Itens Excluídos' : 'Itens de Registro' }}" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input placeholder="pesquisar..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
         </x-slot:middle>
         <x-slot:actions>
             <x-button label="Cadastrar" @click="$wire.drawer = true" responsive icon="o-plus" class="btn-primary" />
+            <x-button label="{{ $this->trash ? 'Mostrar Todos' : 'Lixeira' }}" badge="{{ !$this->trash ? $this->trashedCount() : '' }}" badge-classes="badge-warning" wire:click="$toggle('trash')" responsive icon="{{ $this->trash ? 'o-eye' : 'o-trash' }}" class="{{ $this->trash ? 'btn-primary' : 'btn-error' }}" />   
         </x-slot:actions>
     </x-header>
 
     <!-- TABLE  -->
-    <x-card>
+    <x-card class="mb-4">
         <x-table :headers="$this->headers" :rows="$this->items" show-empty-text empty-text="Ops! Nenhum item encontrado">
             @scope('actions', $item)
-            <x-button icon="o-trash" wire:click="delete({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-error" />
+                @if ($this->trash)
+                    <x-button icon="o-arrow-path" wire:click="restore({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-success" />
+                    <x-button icon="o-trash" wire:click="forceDelete({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-error" />
+                @else
+                    <x-button icon="o-trash" wire:click="delete({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-error" />
+                @endif
             @endscope
         </x-table>
     </x-card>
