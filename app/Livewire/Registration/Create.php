@@ -47,8 +47,8 @@ class Create extends Component
     {
         if (auth()->user()->can('supervisor')) {
             return [
-                ['id' => 'infraction', 'name' => 'Infração'],
-                ['id' => 'measure', 'name' => 'Medida'],
+                ['id' => 'infracao', 'name' => 'Infração'],
+                ['id' => 'medida', 'name' => 'Medida'],
             ];
         }
 
@@ -64,8 +64,8 @@ class Create extends Component
             'type_selected'  => 'required|string|max:20',
             'class_number'   => 'required|string|max:4',
             'items_selected' => 'required|array|exists:items,id',
-            'status'         => 'in:pending,approved,rejected',
-            'observation'   => 'nullable|string|max:500',
+            'status'         => 'in:Pendente,Concluído',
+            'observation'    => 'nullable|string|max:500',
         ]);
 
         Registration::create([
