@@ -4,12 +4,35 @@
         <x-slot:middle class="!justify-end">
         </x-slot:middle>
         <x-slot:actions>
-            <x-button label="{{ $this->trash ? 'Mostrar Todos' : 'Lixeira' }}" badge="{{ !$this->trash ? $this->trashedCount() : '' }}" badge-classes="badge-warning" wire:click="$toggle('trash')" responsive icon="{{ $this->trash ? 'o-eye' : 'o-trash' }}" class="{{ $this->trash ? 'btn-primary' : 'btn-error' }}" />   
-            <x-button label="{{ auth()->user()->can('supervisor') ? 'Medida | Infração' : 'Infração' }}" link="{{ route('registration.create') }}" icon="o-plus" class="btn-primary" />
-           
-            @can('supervisor')
-                <x-button label="Suspensão" link="{{ route('registration.suspension-create') }}" icon="o-plus" class="btn-primary" />
-            @endcan
+            <div class="hidden sm:flex items-center gap-2">
+                <x-button label="{{ $this->trash ? 'Mostrar Todos' : 'Lixeira' }}" badge="{{ !$this->trash ? $this->trashedCount() : '' }}" badge-classes="badge-warning" wire:click="$toggle('trash')" responsive icon="{{ $this->trash ? 'o-eye' : 'o-trash' }}" class="{{ $this->trash ? 'btn-primary' : 'btn-error' }}" />   
+                <x-button label="{{ auth()->user()->can('supervisor') ? 'Medida | Infração' : 'Infração' }}" link="{{ route('registration.create') }}" icon="o-plus" class="btn-primary" />
+               
+                @can('supervisor')
+                    <x-button label="Suspensão" link="{{ route('registration.suspension-create') }}" icon="o-plus" class="btn-primary" />
+                @endcan
+            </div>
+
+            {{-- Mobile Actions --}}
+            <div class="sm:hidden flex justify-end items-center gap-2">
+                <x-dropdown no-x-anchor right>
+                    <x-slot:trigger>
+                        <x-button icon="o-ellipsis-vertical" class="btn-circle" />
+                    </x-slot:trigger>
+                    <x-menu-item  icon="{{ $this->trash ? 'o-eye' : 'o-trash' }}"  wire:click="$toggle('trash')" spinner>
+                        {{ $this->trash ? 'Mostrar Todos' : 'Lixeira' }}
+                        @if (!$this->trash )
+                            <x-badge value="{{ !$this->trash ? $this->trashedCount() : '' }}" class="badge-warning" />
+                        @endif
+                    </x-menu-item>
+                    
+                    <x-menu-item title="{{ auth()->user()->can('supervisor') ? 'Medida | Infração' : 'Infração' }}" icon="o-plus" link="{{ route('registration.create') }}" spinner class="btn-ghost btn-sm text-info" />
+                    @can('supervisor')
+                        <x-menu-item title="Suspensão" icon="o-plus" link="{{ route('registration.suspension-create') }}" class="btn-ghost btn-sm text-error" />
+                    @endcan
+                   
+                </x-dropdown>
+            </div>
         </x-slot:actions>
     </x-header>
 
