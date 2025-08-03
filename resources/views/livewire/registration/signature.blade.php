@@ -5,6 +5,7 @@
             <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
         </x-slot:middle>
         <x-slot:actions>
+            <x-button label="{{ $this->trash ? 'Mostrar Todos' : 'Lixeira' }}" badge="{{ !$this->trash ? $this->trashedCount() : '' }}" badge-classes="badge-warning" wire:click="$toggle('trash')" responsive icon="{{ $this->trash ? 'o-eye' : 'o-trash' }}" class="{{ $this->trash ? 'btn-primary' : 'btn-error' }}" />   
             <x-button label="Cadastrar" @click="$wire.drawer = true" responsive icon="o-plus" class="btn-primary" />
         </x-slot:actions>
     </x-header>
@@ -13,7 +14,12 @@
     <x-card>
         <x-table :headers="$this->headers" :rows="$this->signatures">
             @scope('actions', $signature)
-            <x-button icon="o-trash" wire:click="delete({{ $signature['id'] }})" spinner class="btn-ghost btn-sm text-error" />
+                @if ($this->trash)
+                    <x-button icon="o-arrow-path" tooltip-left="Restaura" wire:click="restore({{ $signature['id'] }})" spinner class="btn-ghost btn-sm text-success" />
+                    <x-button icon="o-trash" tooltip-left="Excluir permanentemente" wire:click="forceDelete({{ $signature['id'] }})" spinner class="btn-ghost btn-sm text-error" />
+                @else
+                    <x-button icon="o-trash" wire:click="delete({{ $signature['id'] }})" spinner class="btn-ghost btn-sm text-error" />
+                @endif
             @endscope
 
         </x-table>

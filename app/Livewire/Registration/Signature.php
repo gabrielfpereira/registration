@@ -23,6 +23,8 @@ class Signature extends Component
 
     public ?int $user_id = null;
 
+    public bool $trash = false;
+
     public function render()
     {
         return view('livewire.registration.signature');
@@ -43,6 +45,9 @@ class Signature extends Component
     public function signatures()
     {
         return ModelsSignature::query()
+            ->when($this->trash, function ($query) {
+                $query->onlyTrashed();
+            })
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%')
                       ->orWhere('role', 'like', '%' . $this->search . '%');
@@ -82,5 +87,23 @@ class Signature extends Component
         }
 
         $this->modal_delete = false;
+    }
+
+    public function restore(int $id)
+    {
+        ModelsSignature::withTrashed()->findOrFail($id)->restore();
+        $this->toast('success','Assinatura restaurada com sucesso!');
+    }
+
+    public function forceDelete(int $id)
+    {
+        ModelsSignature::withTrashed()->findOrFail($id)->forceDelete();
+        $this->toast('success', 'Assinatura excluída permanentemente!');
+    }
+
+    #[Computed()]
+    public function trashedCount()
+    {
+        return ModelsSignature::onlyTrashed()->count();
     }
 }
