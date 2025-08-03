@@ -92,7 +92,7 @@ class Signature extends Component
     public function restore(int $id)
     {
         ModelsSignature::withTrashed()->findOrFail($id)->restore();
-        $this->toast('success','Assinatura restaurada com sucesso!');
+        $this->toast('success', 'Assinatura restaurada com sucesso!');
     }
 
     public function forceDelete(int $id)
