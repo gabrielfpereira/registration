@@ -15,8 +15,8 @@
         <x-table :headers="$this->headers" :rows="$this->items" show-empty-text empty-text="Ops! Nenhum item encontrado">
             @scope('actions', $item)
                 @if ($this->trash)
-                    <x-button icon="o-arrow-path" wire:click="restore({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-success" />
-                    <x-button icon="o-trash" wire:click="forceDelete({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-error" />
+                    <x-button icon="o-arrow-path" tooltip-left="Restaura" wire:click="restore({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-success" />
+            <x-button icon="o-trash" tooltip-left="Excluir permanentemente" wire:click="forceDelete({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-error" />
                 @else
                     <x-button icon="o-trash" wire:click="delete({{ $item['id'] }})" spinner class="btn-ghost btn-sm text-error" />
                 @endif
