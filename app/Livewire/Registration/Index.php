@@ -30,6 +30,8 @@ class Index extends Component
 
     public bool $show_filters = false;
 
+    public bool $trash = false;
+
     public Registration $registration;
 
     public function render()
@@ -60,6 +62,9 @@ class Index extends Component
     {
         return Registration::query()
         ->with(['user'])
+        ->when($this->trash, function ($query) {
+            $query->onlyTrashed();
+        })
         ->when($this->filter_type !== 'all', function ($query) {
             $query->where('type', $this->filter_type);
         })
@@ -93,6 +98,16 @@ class Index extends Component
 
         $this->modal_delete    = false;
         $this->registration_id = null;
+    }
+
+    public function forceDelete(int $id)
+    {
+        Gate::authorize('delete', Registration::withTrashed()->findOrFail($id));
+
+        Registration::withTrashed()->findOrFail($id)->forceDelete();
+
+        $this->toast('success', 'Registro excluído permanentemente!');
+        $this->modal_delete = false;
     }
 
     public function showRegister(int $id)
@@ -137,4 +152,20 @@ class Index extends Component
 
         $this->toast('success', 'Status atualizado com sucesso!');
     }
+
+    #[Computed()]
+    public function trashedCount()
+    {
+        return Registration::onlyTrashed()->count();
+    }
+
+    public function restore(int $id)
+    {
+        Gate::authorize('delete', Registration::withTrashed()->findOrFail($id));
+
+        Registration::withTrashed()->findOrFail($id)->restore();
+
+        $this->toast('success', 'Registro restaurado com sucesso!');
+    }
+
 }
