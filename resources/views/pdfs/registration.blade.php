@@ -53,7 +53,7 @@
                 <p><strong>Dias de Suspensão:</strong> {{ \Carbon\Carbon::parse($registration->registration_date_start)->format('d/m/Y') }} até {{ \Carbon\Carbon::parse($registration->registration_date_end)->format('d/m/Y') }}</p>
                 <p>O aluno(a) deverá retornar às aulas no dia {{ \Carbon\Carbon::parse($registration->registration_date_end)->addDay()->format('d/m/Y') }}.</p>
             @endif
-            <p><strong>Itens de Registro:</strong></p>
+            <p><strong>Descumprimentos do Regimento Escolar:</strong></p>
             <ul class="list-disc pl-5">
                 @foreach($registration->items as $item)
                     <li>{{ $item->description }}</li>

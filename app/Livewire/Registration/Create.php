@@ -53,7 +53,7 @@ class Create extends Component
         }
 
         return [
-            ['id' => 'infraction', 'name' => 'Infração'],
+            ['id' => 'infracao', 'name' => 'Infração'],
         ];
     }
 
