@@ -1,5 +1,5 @@
 <div>
-   <x-card title="Perfil do Guerreiro" class="mb-4 w-1/2">
+   <x-card title="Perfil do Guerreiro" class="mb-4 sm:w-1/2 w-full">
         <x-form wire:submit="validateProfile">
             <x-input label="Nome" placeholder="Nome do Guerreiro" wire:model="name" />
             
@@ -11,7 +11,7 @@
         </x-form>
    </x-card>
 
-   <x-card title="Mudar Senha" class="mb-4 w-1/2">
+   <x-card title="Mudar Senha" class="mb-4 sm:w-1/2 w-full">
         <x-form wire:submit="validatePassword">
             <x-password label="Nova Senha" type="password" wire:model="new_password" />
             <x-password label="Confirmação da Nova Senha" type="password" wire:model="new_password_confirmation" />
