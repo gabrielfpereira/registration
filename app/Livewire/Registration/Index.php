@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Computed;
 use Livewire\{Component, WithPagination};
 use Mary\Traits\Toast;
+use Spatie\Browsershot\Browsershot;
 use Spatie\LaravelPdf\Facades\Pdf as FacadesPdf;
 
 class Index extends Component
@@ -123,6 +124,14 @@ class Index extends Component
     }
 
     public function print(int $id)
+    {
+        Browsershot::html('<h1>Teste</h1>')
+            ->setIncludePath('/usr/bin/chromium-browser') // ou o path correto no container
+            ->save(storage_path('app/public/teste.pdf'));
+
+    }
+
+    public function printold(int $id)
     {
         $this->registration = Registration::with('items')->findOrFail($id);
 
