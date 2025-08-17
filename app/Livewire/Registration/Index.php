@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Computed;
 use Livewire\{Component, WithPagination};
 use Mary\Traits\Toast;
-use Spatie\Browsershot\Browsershot;
-use Spatie\LaravelPdf\Facades\Pdf as FacadesPdf;
 
 class Index extends Component
 {
@@ -127,26 +125,6 @@ class Index extends Component
     {
         $url = route('print', ['id' => $id]);
         $this->dispatch('print_now', $url);
-    }
-
-    public function printold(int $id)
-    {
-        $this->registration = Registration::with('items')->findOrFail($id);
-
-        $fileName = $this->registration->student_name . '-' . $this->registration->class_number . '-' . now()->format('dmY') . '.pdf';
-
-        // Gera o PDF
-        FacadesPdf::view('pdfs.registration', [
-            'registration' => $this->registration,
-        ])
-        ->save(storage_path("app/public/{$fileName}"));
-
-        return response()->stream(function () use ($fileName) {
-            echo file_get_contents(storage_path("app/public/{$fileName}"));
-        }, 200, [
-            'Content-Type'        => 'application/pdf',
-            'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
-        ]);
     }
 
     public function toggleStatus(int $id)
