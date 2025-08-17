@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Spatie\LaravelPdf\Facades\Pdf;
+
 
 Route::get('/', function () {
     //return view('welcome');
@@ -17,10 +19,19 @@ Route::get('/registration/suspension-create', \App\Livewire\Registration\Suspens
 Route::get('/registration/signature', \App\Livewire\Registration\Signature::class)->middleware(['auth'])->name('registration.signature');
 Route::get('/profile', \App\Livewire\Profile\Index::class)->middleware(['auth'])->name('profile.index');
 
+//Route::get('/print/{id}', function ($id) {
+  //  return view('pdfs.registration', [
+  //      'registration' => \App\Models\Registration::with(['items', 'user'])->findOrFail($id),
+  //  ]);
+//})->name('print');
+
 Route::get('/print/{id}', function ($id) {
-    return view('pdfs.registration', [
-        'registration' => \App\Models\Registration::with(['items', 'user'])->findOrFail($id),
-    ]);
+    $registration = \App\Models\Registration::with('items')->findOrFail($id);
+
+        $fileName = $registration->student_name . '-' . $registration->class_number . '-' . now()->format('dmY') . '.pdf';
+    return Pdf::view('pdfs.registration', ['registration' => $registration])
+        ->format('a4')
+        ->download("{$fileName}.pdf");
 })->name('print');
 
 require __DIR__ . '/auth.php';

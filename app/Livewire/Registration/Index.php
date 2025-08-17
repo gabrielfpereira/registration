@@ -125,10 +125,7 @@ class Index extends Component
 
     public function print(int $id)
     {
-        Browsershot::html('<h1>Teste</h1>')
-            ->setIncludePath('/usr/bin/chromium-browser') // ou o path correto no container
-            ->save(storage_path('app/public/teste.pdf'));
-
+        return redirect()->route('print', ['id' => $id]);
     }
 
     public function printold(int $id)
