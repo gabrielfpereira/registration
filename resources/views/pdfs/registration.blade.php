@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ isset($title) ? $title.' - '.config('app.name') : config('app.name') }}</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.min.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
    
 </head>
-<body>
-    <div class="flex justify-center items-center w-full  p-4">
+<body >
+    <div class="flex justify-center items-center w-full  p-4" id="conteudo">
         <div class="border-1 border-gray-300 px-4 py-2 min-h-24 max-h-24">
             <img src="{{ asset('assets/logo-prefeitura.jpg') }}" alt="Logo-prefeitura" class="w-20 h-20 mx-auto mb-2">
         </div>
@@ -96,6 +97,11 @@
             </div>
         </div>
     </div>
-  
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            window.print();
+        });
+        
+    </script>
 </body>
 </html>

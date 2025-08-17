@@ -164,4 +164,11 @@
         @endif
     </x-modal>
    
+    <script>
+    document.addEventListener("livewire:init", () => {
+            Livewire.on("print_now", (url) => {
+                window.open(url, "_blank");
+            });
+        });
+    </script>
 </div>

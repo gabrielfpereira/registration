@@ -25,13 +25,4 @@ Route::get('/print/{id}', function ($id) {
     ]);
 })->name('print');
 
-//Route::get('/print/{id}', function ($id) {
-  //  $registration = \App\Models\Registration::with('items')->findOrFail($id);
-//
-  //      $fileName = $registration->student_name . '-' . $registration->class_number . '-' . now()->format('dmY') . '.pdf';
-    //return Pdf::view('pdfs.registration', ['registration' => $registration])
-      //  ->format('a4')
-        //->download("{$fileName}.pdf");
-//})->name('print');
-
 require __DIR__ . '/auth.php';

@@ -125,7 +125,8 @@ class Index extends Component
 
     public function print(int $id)
     {
-        return redirect()->route('print', ['id' => $id]);
+        $url = route('print', ['id' => $id]);
+        $this->dispatch('print_now', $url);
     }
 
     public function printold(int $id)
